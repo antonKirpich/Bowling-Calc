@@ -32,15 +32,22 @@ public:
         frameScore = firstShot + secondShot;
         return frameScore;
     }
+    void AddScore(int points)
+    {
+        frameScore += points;
+    }
+    int getFrameScore()
+    {
+        return  frameScore;
+    }
 
     ~Frame()
     { }
 
-    int frameScore;
-
 private:
     int firstShot;
     int secondShot;
+    int frameScore;
 };
 
 int main() {
@@ -80,17 +87,18 @@ int main() {
                     if (game[i + 1].isStrike())    //если след удар опять Strike
                     {
                         game[i].CalcScore();
-                        game[i].frameScore += 10;   //бонус за следующий страйк
+                        game[i].AddScore(10);   //бонус за следующий страйк
 
                         if ((frame - i) >=2 )       //если существует еще бросок (+2)
                         {
-                            game[i].frameScore += game[i+2].getFirstShot();  //добавляем бонус через один бросок
+                            game[i].AddScore(game[i+2].getFirstShot());  //добавляем бонус через один бросок
                         }
                     }
                     else            //если след раунд регулар или спар
                     {
                         game[i].CalcScore();                //добавляем бонус очки со след 2х бросков
-                        game[i].frameScore += game[i+1].getFirstShot() + game[i+1].getSecondShot();
+                        game[i].AddScore(game[i+1].getFirstShot());
+                        game[i].AddScore(game[i+1].getSecondShot());
                     }
                 }
                 else        //если это крайний бросок
@@ -104,7 +112,7 @@ int main() {
                 if (i != frame)
                 {
                     game[i].CalcScore();
-                    game[i].frameScore += game[i+1].getFirstShot();
+                    game[i].AddScore(game[i+1].getFirstShot());
                 }
                 else
                 {
@@ -135,19 +143,19 @@ int main() {
         cout << " Frame Score ";
         for(auto it = game.begin(); it != game.end(); ++it)
         {
-            cout << "|" << it->frameScore;
-            if (it->frameScore >= 10) cout << "    ";
-            if (it->frameScore <  10) cout << "     ";        //выравнивание для табличного вывода
+            cout << "|" << it->getFrameScore();
+            if (it->getFrameScore() >= 10) cout << "    ";
+            if (it->getFrameScore() <  10) cout << "     ";        //выравнивание для табличного вывода
         }
         cout << endl;
 
-        int totalScore = game[0].frameScore;
+        int totalScore = game[0].getFrameScore();
         cout << " Total       |" << totalScore;
         if (totalScore < 10)   cout << "     ";
            else cout << "    ";
         for(auto it = game.begin() + 1; it != game.end(); ++it)
         {
-            totalScore += it->frameScore;
+            totalScore += it->getFrameScore();
             cout << "|" << totalScore;
             if (totalScore < 10)   {cout << "     "; continue;}     //Выравниваение для табличного вывода
             if (totalScore < 100)  {cout << "    ";  continue;}
