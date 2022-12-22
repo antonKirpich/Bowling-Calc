@@ -27,6 +27,12 @@ public:
     {
         return secondShot;
     }
+    int CalcScore()
+    {
+        frameScore = firstShot + secondShot;
+        return frameScore;
+    }
+
     ~Frame()
     { }
 
@@ -73,7 +79,7 @@ int main() {
                 {
                     if (game[i + 1].isStrike())    //если след удар опять Strike
                     {
-                        game[i].frameScore = game[i].getFirstShot() + game[i].getSecondShot();
+                        game[i].CalcScore();
                         game[i].frameScore += 10;   //бонус за следующий страйк
 
                         if ((frame - i) >=2 )       //если существует еще бросок (+2)
@@ -83,13 +89,13 @@ int main() {
                     }
                     else            //если след раунд регулар или спар
                     {
-                        game[i].frameScore  = game[i].getFirstShot() + game[i].getSecondShot();      //добавляем бонус очки со след 2х бросков
+                        game[i].CalcScore();                //добавляем бонус очки со след 2х бросков
                         game[i].frameScore += game[i+1].getFirstShot() + game[i+1].getSecondShot();
                     }
                 }
                 else        //если это крайний бросок
                 {
-                    game[i].frameScore = game[i].getFirstShot() + game[i].getSecondShot();
+                    game[i].CalcScore();
                 }
             }
 
@@ -97,18 +103,18 @@ int main() {
             {
                 if (i != frame)
                 {
-                    game[i].frameScore = game[i].getFirstShot() + game[i].getSecondShot();
+                    game[i].CalcScore();
                     game[i].frameScore += game[i+1].getFirstShot();
                 }
                 else
                 {
-                    game[i].frameScore = game[i].getFirstShot() + game[i].getSecondShot();
+                    game[i].CalcScore();
                 }
             }
 
             if ((!game[i].isStrike()) && (!game[i].isSpare()))  //если это обычный бросок
             {
-                game[i].frameScore = game[i].getFirstShot() + game[i].getSecondShot();
+                game[i].CalcScore();
             }
         }
 
