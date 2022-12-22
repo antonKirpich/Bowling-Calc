@@ -27,6 +27,8 @@ public:
     {
         return secondShot;
     }
+    ~Frame()
+    { }
 
     int frameScore;
 
@@ -147,5 +149,9 @@ int main() {
         }
 
     }
+
+    //удаляем все эл-ты вектора-массива
+    //деструктор для каждого объекта вызовется автоматически
+    game.clear();
     return 0;
 }
