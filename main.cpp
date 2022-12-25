@@ -1,20 +1,19 @@
 #include <iostream>
 #include <vector>
 #include <gtest/gtest.h>
-#include <gmock/gmock.h>
 #include "Frame.h"
 
 using namespace std;
 
 int main(int argc, char **argv) {
 
-    //::testing::InitGoogleTest(&argc, argv);
-    //return RUN_ALL_TESTS();
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 
     cout << "Bowling calc" << endl;
 
     vector<Frame> game;     //массив-вектор объектов класса Frame
-    game.reserve(10);
+    game.reserve(11);
 
     for (int frame = 0; frame < 10; frame++)    //перебираем 10 фреймов
     {
