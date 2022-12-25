@@ -4,6 +4,7 @@
     {
         this->firstShot  = firstShot;
         this->secondShot = secondShot;
+        frameScore = 0;
     }
     bool Frame::isStrike()
     {
@@ -46,7 +47,12 @@
 
         for (int i = 0; i <= frame; i++)
         {
-
+            if (i == 9)     //если это последний раунд, то нет начисления бонусных очков
+            {
+                it[i].CalcScore();
+                totalGameScore += it[i].getFrameScore();
+                continue;
+            }
             if (it[i].isStrike())         //если это страйк, то след два броска с бонусом (если они есть)
             {
                 if (i != frame)             //если это не последний бросок
@@ -81,7 +87,7 @@
                     it[i].CalcScore();
                     it[i].AddScore(it[i+1].getFirstShot());
                 }
-                else
+                else  //если это крайний бросок
                 {
                     it[i].CalcScore();
                 }
