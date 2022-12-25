@@ -1,56 +1,13 @@
 #include <iostream>
 #include <vector>
+#include <gtest/gtest.h>
+#include <gmock/gmock.h>
+#include "Frame.h"
+
 using namespace std;
 
-class Frame
-{
-public:
-    Frame(int firstShot, int secondShot)        //конструктор
-    {
-        this->firstShot  = firstShot;
-        this->secondShot = secondShot;
-    }
-    bool isStrike()
-    {
-        return ( firstShot == 10);  //Страйк, если первым ударом выбито 10 кеглей
-    }
-    bool isSpare()
-    {
-        return ((firstShot+secondShot == 10) & !isStrike());
-        //Спаре, если выбито 10 кеглей и первый удар не страйк
-    }
-    int getFirstShot()          //кегли в первом броске
-    {
-        return firstShot;
-    }
-    int getSecondShot()         //кегли во втором броске
-    {
-        return secondShot;
-    }
-    int CalcScore()
-    {
-        frameScore = firstShot + secondShot;
-        return frameScore;
-    }
-    void AddScore(int points)
-    {
-        frameScore += points;
-    }
-    int getFrameScore()
-    {
-        return  frameScore;
-    }
+int main(int argc, char **argv) {
 
-    ~Frame()
-    { }
-
-private:
-    int firstShot;
-    int secondShot;
-    int frameScore;
-};
-
-int main() {
     cout << "Bowling calc" << endl;
 
     vector<Frame> game;     //массив-вектор объектов класса Frame
@@ -167,5 +124,6 @@ int main() {
     //удаляем все эл-ты вектора-массива
     //деструктор для каждого объекта вызовется автоматически
     game.clear();
+
     return 0;
 }
