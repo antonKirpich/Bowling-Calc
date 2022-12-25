@@ -8,6 +8,9 @@ using namespace std;
 
 int main(int argc, char **argv) {
 
+    //::testing::InitGoogleTest(&argc, argv);
+    //return RUN_ALL_TESTS();
+
     cout << "Bowling calc" << endl;
 
     vector<Frame> game;     //массив-вектор объектов класса Frame
@@ -31,57 +34,13 @@ int main(int argc, char **argv) {
             } while ((secondShot < 0) || (secondShot > (10 - firstShot)));
         }
 
+
         Frame *shot = new Frame(firstShot, secondShot);  //Новый объект класса бросок
         game.push_back(*shot);                           //добавляем в конец массива-вектора
 
-        //подсчет frameScore-------------------------------------------------------------------------------
-        for (int i = 0; i <= frame; i++)
-        {
-            if (game[i].isStrike())         //если это страйк, то след два броска с бонусом (если они есть)
-            {
-                if (i != frame)             //если это не последний бросок
-                {
-                    if (game[i + 1].isStrike())    //если след удар опять Strike
-                    {
-                        game[i].CalcScore();
-                        game[i].AddScore(10);   //бонус за следующий страйк
+        int totalscr = CalcTotalScore(game.begin(), frame);     //Вызов функции для вычисления общего кол-ва очков
+        cout << endl << "Total Score after " << frame+1 << " round: " <<  totalscr;
 
-                        if ((frame - i) >=2 )       //если существует еще бросок (+2)
-                        {
-                            game[i].AddScore(game[i+2].getFirstShot());  //добавляем бонус через один бросок
-                        }
-                    }
-                    else            //если след раунд регулар или спар
-                    {
-                        game[i].CalcScore();                //добавляем бонус очки со след 2х бросков
-                        game[i].AddScore(game[i+1].getFirstShot());
-                        game[i].AddScore(game[i+1].getSecondShot());
-                    }
-                }
-                else        //если это крайний бросок
-                {
-                    game[i].CalcScore();
-                }
-            }
-
-            if (game[i].isSpare())      //если это спар, то начисляем бонусы на след бросок (если он уже сделан)
-            {
-                if (i != frame)
-                {
-                    game[i].CalcScore();
-                    game[i].AddScore(game[i+1].getFirstShot());
-                }
-                else
-                {
-                    game[i].CalcScore();
-                }
-            }
-
-            if ((!game[i].isStrike()) && (!game[i].isSpare()))  //если это обычный бросок
-            {
-                game[i].CalcScore();
-            }
-        }
 
         //Вывод результатов на экран---------------------------------------------------------------------------
         cout << endl;
